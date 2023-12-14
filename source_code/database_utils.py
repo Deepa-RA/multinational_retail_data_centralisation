@@ -4,8 +4,16 @@ from sqlalchemy import create_engine, inspect
 
 #Create class to read credentials and upload data to DB
 class DatabaseConnector:
-
+    """
+    Class containing methods to establish Database connections and upload data to SQL
+    """
     def __init__(self,creds_file):
+        """
+        Initialise the DataConnector instance with credentials from specified YAML file.
+
+        Args:
+            creds_file (str): YAML file containing database credentials.
+        """
         self.creds_file = creds_file
         self.db_creds = self.read_db_creds()
         self.engine = self.init_db_engine()
@@ -13,6 +21,12 @@ class DatabaseConnector:
 
     # read credentials from yaml file and return dictionary of credentials
     def read_db_creds(self):
+         """
+        Reads database credentials from a YAML file and returns them as a dictionary.
+
+        Returns:
+        dict: Database credentials.
+        """
         with open(self.creds_file, 'r') as f:
             try:
                 inputfile = yaml.safe_load(f)
@@ -22,6 +36,12 @@ class DatabaseConnector:
        
     
     def init_db_engine(self):
+        """
+        Initializes and returns a SQLAlchemy database engine using the provided credentials.
+
+        Returns:
+            create_engine: A SQLAlchemy engine instance configured for the database.
+        """
         # Read the credentials from the YAML file
         creds = self.db_creds
         # Extract the credentials
@@ -42,6 +62,12 @@ class DatabaseConnector:
             print(f"Connection error: {exc}")
 
     def list_db_tables(self):
+        """
+        Lists all tables in connected database
+
+        Returns:
+            List: A list of table names in the database.
+        """
         inspector = inspect(self.engine)
         return inspector.get_table_names()
 

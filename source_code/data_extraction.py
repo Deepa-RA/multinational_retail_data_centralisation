@@ -88,7 +88,7 @@ class DataExtractor():
         - store_data (pandas DataFrame): Combined data for all stores.
         """
         all_store_data = []
-        for store_number in range(1,number_of_stores):
+        for store_number in range(0,number_of_stores):
             response = requests.get(f'{store_endpoint}{store_number}', headers=header)
             if response.status_code == 200:
                 store_data = response.json()
